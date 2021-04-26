@@ -1,11 +1,13 @@
 <ActorFrame>
 	<children>
+ 
+<!--1 star-->
 		<ActorFrame
-			OnCommand="zoom,0.8;pulse;EffectMagnitude,1,0.9,0"
+			OnCommand="diffuse,#A77044"
 		>
 			<children>
 				<Actor
-					File="star.png"
+					File="star.gif"
 				/>
 			</children>
 		</ActorFrame>

@@ -1,7 +1,7 @@
 <ActorFrame>
 	<children>
 		<ActorFrame
-			OnCommand="zoom,0.85"
+			OnCommand="zoom,0.3"
 		>
 			<children>
 				<Actor

@@ -1,9 +1,13 @@
-<ActorFrame
-	InitCommand="zoom,0.85"
->
+<ActorFrame>
 	<children>
-		<Actor
-			File="f.png"
-		/>
+		<ActorFrame
+			OnCommand="zoom,0.3"
+		>
+			<children>
+				<Actor
+					File="f.png"
+				/>
+			</children>
+		</ActorFrame>
 	</children>
 </ActorFrame>

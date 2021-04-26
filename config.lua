@@ -2,7 +2,7 @@
 -- Read contents by doing stitch("config").YourPref
 
 -- For console, instructions further down
-layout = "QwertyUS"
+layout = "QwertzSwissDE"
 console = "9"
 deep = "!"
 bare = ","
@@ -32,8 +32,9 @@ layout:
         QwertyUS
         QwertyUK
         QwertyNO
+		QwertzCH
 
-    You can add more in /Overlay/lua/keyboard.lua
+    You can add more in /lua/layout.lua
 
 console:
     Hold ctrl+<key> to open the console

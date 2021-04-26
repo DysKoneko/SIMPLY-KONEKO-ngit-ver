@@ -1,17 +1,28 @@
 <ActorFrame> <children>
-	<Layer Type="ActorFrame" OnCommand="x,65;y,-97"> <children>
-		<Layer Type="BitmapText" Font="_misoreg white" Text="FANTASTIC"	OnCommand="y,27*0;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="EXCELLENT"	OnCommand="y,27*1;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="GREAT"		OnCommand="y,27*2;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="DECENT"	OnCommand="y,27*3;zoom,0.35;horizalign,right;ShadowLength,0" InitCommand="%function(self) if not Decents() then self:diffuse(.5,.5,.5,.5) end end" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="WAY OFF"	OnCommand="y,27*4;zoom,0.35;horizalign,right;ShadowLength,0" InitCommand="%function(self) if not WayOffs() then self:diffuse(.5,.5,.5,.5) end end" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="MISS"		OnCommand="y,27*5;zoom,0.35;horizalign,right;ShadowLength,0" />
+<!-- if it contains yeet_p2 it's not default / helped by sorae -->
+	<Layer Type="ActorFrame" OnCommand="x,65;y,-97" InitCommand="%function(self) yeet_p2 = 1 end" UpdateSpellDisplayP2MessageCommand="
+		%function(self) 
+			if yeet_p2 == -1 then 
+				self:hidden(0)
+				SCREENMAN:GetTopScreen():GetChild('MarvelousNumberP1'):hidden(0)
+				SCREENMAN:GetTopScreen():GetChild('PerfectNumberP1'):hidden(0)
+			else 
+				self:hidden(1) 
+				SCREENMAN:GetTopScreen():GetChild('MarvelousNumberP1'):hidden(1)
+				SCREENMAN:GetTopScreen():GetChild('PerfectNumberP1'):hidden(1)
+			end; 
+		yeet_p2 = -yeet_p2 end"> <children>
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Fantastic"	OnCommand="y,27*0;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#99D2FF" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Excellent"	OnCommand="y,27*1;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#FFFF99" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Great"		OnCommand="y,27*2;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#99FFAF" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Decent"	OnCommand="y,27*3;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#D199FF" InitCommand="%function(self) if not Decents() then self:diffuse(.5,.5,.5,.5) end end" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Way Off"	OnCommand="y,27*4;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#FFCF99" InitCommand="%function(self) if not WayOffs() then self:diffuse(.5,.5,.5,.5) end end" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Miss"		OnCommand="y,27*5;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#FF99A3" />
 	</children> </Layer>
 	<Layer Type="ActorFrame" OnCommand="x,-110;y,-97"> <children>
-		<Layer Type="BitmapText" Font="_misoreg white" Text="holds"		OnCommand="y,27*2;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="mines"		OnCommand="y,27*3;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="hands"		OnCommand="y,27*4;zoom,0.35;horizalign,right;ShadowLength,0" />
-		<Layer Type="BitmapText" Font="_misoreg white" Text="rolls"		OnCommand="y,27*5;zoom,0.35;horizalign,right;ShadowLength,0" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Holds"		OnCommand="y,27*2;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#F2F2F2" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Mines"		OnCommand="y,27*3;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#808080" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Hands"		OnCommand="y,27*4;zoom,0.35;horizalign,right;ShadowLength,0" />
+		<Layer Type="BitmapText" Font="_misoreg white" Text="Rolls"		OnCommand="y,27*5;zoom,0.35;horizalign,right;ShadowLength,0;diffuse,#FFFE8F" />
 	</children> </Layer>
 </children> </ActorFrame>
-

@@ -114,11 +114,7 @@
 -- These will be the option rows available on the [nth] option screen. The 'NextScreen' row will be automatically added as long as there is more than 1 option screen.
 	playerOptions = {}
 	playerOptions[1] = { 'SpeedType','SpeedNumber','Mini','Perspective','NoteSkin','Turn','LifeBar','Compare','Rate' }
-	if FUCK_EXE and tonumber(GAMESTATE:GetVersionDate()) >= 20210420 then -- v4.2.0
-		playerOptions[2] = { 'MetaMods1','MetaMods2','MetaMods3','Turn','Accel','Scroll','Effect','Appearance','Handicap','InsertTaps','InsertOther','Hide','Ghost' }
-	else
-		playerOptions[2] = { 'Turn','Accel','Scroll','Effect','Appearance','Handicap','InsertTaps','InsertOther','Hide','Ghost' }
-	end
+	playerOptions[2] = { 'MetaMods1','MetaMods2','MetaMods3','Turn','Accel','Scroll','Effect','Appearance','Handicap','InsertTaps','InsertOther','Hide','Ghost' }
 	playerOptions.Edit = { 'SpeedType','SpeedNumber','Mini','Perspective','NoteSkin','Turn' }
 	ShowAllInRow = false
 
@@ -845,7 +841,8 @@ modRate = 1
 ModsPlayer = {}
 ModsMaster = {}
 ModsMaster.Perspective =	{ modlist = {'Overhead','Hallway','Distant','Incoming','Space'}, Select = 1 }
-ModsMaster.NoteSkin =		{ modlist = {'Scalable','Metal','Cel','Flat','Vivid','Cyber','DivinEntity','couples'}, Select = 1 }
+-- ModsMaster.NoteSkin =		{ modlist = {'Scalable','Metal','Cel','Flat','Vivid','Cyber','DivinEntity','couples'}, Select = 1 }
+ModsMaster.NoteSkin =		{ modlist = {'scalable-cel-HD','scalable-celvibrant-HD','scalable-metal-HD','scalable-metalvibrant-HD','ddrlike-HD','ddr-note-HD','ddr-rainbow-HD','ddr-vivid-HD','Scalable-Red','Conflictable','Metal','Cel','Flat','Vivid','Cyber','DivinEntity','couples','FNF','FNF_Quantize'}, Select = 1 }
 ModsMaster.Turn =			{ modlist = {'Mirror','SoftShuffle','SmartBlender','Blender',}, default = 'no mirror,no left,no right,no shuffle,no supershuffle,no softshuffle, no spookyshuffle, no smartblender', mods = {'mirror','softshuffle','smartblender','supershuffle'} }
 ModsMaster.Hide = 			{ modlist = {'Hide Targets','Hide Judgments','Hide Background'}, default ='no dark,no blind,no cover', mods = {'dark','blind','cover'} }
 ModsMaster.Accel =			{ modlist = {'Accel','Decel','Wave','Boomerang','Expand','Bump'}, default = 'no boost,no brake,no wave,no boomerang,no expand,no bumpy', mods = {'Boost','Brake','Wave','Boomerang','Expand','Bumpy'} }
@@ -878,6 +875,9 @@ ModsMaster.Tornado =		{ float = true }
 ModsMaster.Tipsy =			{ float = true }
 ModsMaster.Beat =			{ float = true }
 ModsMaster.Mini =			{ float = true }
+
+ModsMaster.BlindPlus = 		{ fnctn = 'BlindPlusOption', mods = 'Blind Plus' }
+-- Melody aka Jaezmien Naejara helped me with BlindPlus
 
 ModsMaster.MetaMods1 = 		{ fnctn = 'MetaMods1' }
 ModsMaster.MetaMods2 = 		{ fnctn = 'MetaMods2' }
@@ -1021,6 +1021,22 @@ end
 --------------------
 -- Lua Option Rows
 --------------------
+-- Melody aka Jaezmien Naejara helped me with BlindPlus
+mm_enableBlindPlus = {'No','No'}
+function BlindPlusOption()
+    local modList = {'No', 'Yes'}
+    local t = OptionRowBase('Blind Plus',modList)
+    --t.OneChoiceForAllPlayers = true
+    t.LoadSelections = function(self, list, pn)
+		if mm_enableBlindPlus[pn]=='Yes' then list[2]=true else list[1]=true end
+	end
+    t.SaveSelections = function(self, list, pn)
+    for n=1,table.getn(modList) do
+        if list[n] then mm_enableBlindPlus[pn] = modList[n] end
+    end
+    end
+    return t
+end
 
 function SpeedType()
 	local t = OptionRowBase((optionIndex == 'Edit' and 'Speed') or 'Speed Mod Type',{ 'x' , 'C' , 'm' })

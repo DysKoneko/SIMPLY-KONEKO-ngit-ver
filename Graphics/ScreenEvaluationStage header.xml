@@ -1,8 +1,9 @@
 <ActorFrame> <children>
 	<Layer File="ScreenWithMenuElements header"/>	
+	<!-- Text="EVALUATION" -->
 	<Layer
 		Type="BitmapText"
-		Text="EVALUATION"
+		Text="git gud screen"
 		File="_wendy white"
 		OnCommand="diffuse,#FFFFFF;zoom,.4;shadowlength,0;horizalign,left;x,15;y,16"
 		OffCommand="linear,0.2;diffusealpha,0"

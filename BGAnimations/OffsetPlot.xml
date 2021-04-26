@@ -151,7 +151,8 @@
 	
 end"><children>
 	<!--xy,SCREEN_WIDTH*0.25-oplot_plotWidth/2,SCREEN_HEIGHT*0.5+56+oplot_plotHeight/2-->
-	<Layer Type="ActorFrame" OnCommand="xy,SCREEN_WIDTH*0.5-157,SCREEN_HEIGHT*0.5+72-14;hidden,1"
+	<!--P1 xy,SCREEN_WIDTH*0.5-157,SCREEN_HEIGHT*0.5+72-14;hidden,1-->
+	<Layer Type="ActorFrame" OnCommand="xy,SCREEN_WIDTH*0.5+157,SCREEN_HEIGHT*0.5+72-14;hidden,1"
 	StepP1LeftPressMessageCommand="%function(self)
 		local pn = 1
 		if oplot_hidden[pn] == 1 then
@@ -225,11 +226,12 @@ end"><children>
 		end"
 		/>
 		
-		<Layer Type="Quad" InitCommand="zoomto,305,999;diffuse,#1E282F"
+		<!--self:x(70 + 12)			diffuse,#1E282F-->
+		<Layer Type="Quad" InitCommand="zoomto,305,999;diffuse,#1E282F40"
 		UpdateSpellDisplayP1MessageCommand="%function(self)
 			local pn = 1
 			if curcard[pn] == 0 then
-				self:x(70 + 12)
+				self:x(-70 - 12)
 				self:y(-88)
 				self:zoomto(135,60)
 				self:hidden(0)
@@ -622,6 +624,7 @@ end"><children>
 			end"
 		/>
 		
+			<!--self:xy(83,-98)-->
 		<Layer Type="BitmapText" Text="" Font="_misoreg small"
 		UpdateSpellDisplayP1MessageCommand="%function(self)
 			local pn = 1
@@ -633,7 +636,7 @@ end"><children>
 		end"
 		OnCommand="%function(self)
 			self:hidden(1)
-			self:xy(83,-98)
+			self:xy(-83,-98)
 			self:zoom(.8)
 			self:shadowlength(0)
 			
@@ -681,7 +684,8 @@ end"><children>
 
 	</children></Layer>
 	
-	<Layer Type="ActorFrame" OnCommand="xy,SCREEN_WIDTH*0.5+157,SCREEN_HEIGHT*0.5+72-14;hidden,1"
+	<!--P2 xy,SCREEN_WIDTH*0.5+157,SCREEN_HEIGHT*0.5+72-14;hidden,1-->
+	<Layer Type="ActorFrame" OnCommand="xy,SCREEN_WIDTH*0.5-157,SCREEN_HEIGHT*0.5+72-14;hidden,1"
 	StepP1RightPressMessageCommand="%function(self)
 		local pn = 2
 		if oplot_hidden[pn] == 1 then
@@ -755,11 +759,12 @@ end"><children>
 		end"
 		/>
 		
+				<!--self:x(-70 - 12)		diffuse,#1E282F-->
 		<Layer Type="Quad" InitCommand="zoomto,305,999;diffuse,#1E282F"
 		UpdateSpellDisplayP2MessageCommand="%function(self)
 			local pn = 2
 			if curcard[pn] == 0 then
-				self:x(-70 - 12)
+				self:x(70 + 12)
 				self:y(-88)
 				self:zoomto(135,60)
 				self:hidden(0)
@@ -1152,6 +1157,7 @@ end"><children>
 			end"
 		/>
 		
+			<!--self:xy(-83,-98)-->
 		<Layer Type="BitmapText" Text="" Font="_misoreg small"
 		UpdateSpellDisplayP2MessageCommand="%function(self)
 			local pn = 2
@@ -1163,7 +1169,7 @@ end"><children>
 		end"
 		OnCommand="%function(self)
 			self:hidden(1)
-			self:xy(-83,-98)
+			self:xy(83,-98)
 			self:zoom(.8)
 			self:shadowlength(0)
 			

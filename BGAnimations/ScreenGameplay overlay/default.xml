@@ -1,3 +1,138 @@
-<ActorFrame> <children>
+<ActorFrame InitCommand="%function(self)
+
+			-- master list of enable toggles
+			
+			-- max combo display, for each player
+			samTheme_p1MaxCombo = true
+			samTheme_p2MaxCombo = false
+			
+			-- judgement breakdown display, for each player
+			samTheme_p1JudgeDisplay = true
+			samTheme_p2JudgeDisplay = false
+			
+			-- dance points display, for each player
+			samTheme_p1PointsDisplay = false
+			samTheme_p2PointsDisplay = false
+			
+			-- CURSED CONTENT [NITG only]: combo-based scoring manager, for each player
+			--[[ dummied out because it doesn't actually *work*
+			samTheme_p1ComboBasedTorture = false
+			samTheme_p2ComboBasedTorture = false
+			]]
+			
+	
+			-- Display current song in course [code by -YOSEFU-]
+			samTheme_courseSongDisplay = true
+	
+	
+			-- setting toggles
+			samTheme_p1ComboLayout = 1
+			samTheme_p2ComboLayout = 0
+			samTheme_p1JudgeLeadingZeroes = true;
+			samTheme_p2JudgeLeadingZeroes = false;
+			
+			--[[ COMBO LAYOUTS:
+				0:
+				F E
+				G D
+				W M
+				
+				1:
+				F D
+				E W
+				G M
+			]]
+	end"> 
+<!-- Samario Overlay Stuff (judgment tracker in gameplay) START
+		InitCommand in the ActorFrame above
+	 Samario Overlay Stuff (judgment tracker in gameplay) END -->
+<children>
+<!-- Melody aka Jaezmien Naejara helped me with BlindPlus -->
+<Layer
+	OnCommand="queuecommand,Set"
+	SetCommand="%function()
+		for pn=1,2 do
+			if GAMESTATE:IsPlayerEnabled(pn-1) and mm_enableBlindPlus[pn-1]=='Yes' then
+				GAMESTATE:ApplyModifiers('*-1 blind',pn)
+				local ThingsToHide = {'LifeP','ScoreP'}
+				for i,v in pairs(ThingsToHide) do
+					if SCREENMAN:GetTopScreen():GetChild(v..pn) then SCREENMAN:GetTopScreen():GetChild(v..pn):hidden(1) end
+				end
+			end
+		end
+	end"
+/>
+<!-- YOSEFU lines START -->
+<Layer Type="BitmapText" File="Common Normal" OnCommand="shadowlength,0;xy,SCREEN_CENTER_X,SCREEN_BOTTOM-72;zoom,0.5;maxwidth,640" Text=""
+    InitCommand="queuecommand,Update"
+    UpdateCommand="%function( self )
+
+        if GAMESTATE:IsCourseMode() then
+
+            local group  = string.sub( GAMESTATE:GetCurrentSong():GetSongDir(), 8, string.find( GAMESTATE:GetCurrentSong():GetSongDir(), '/', 8 ) - 1 );
+            local title  = GAMESTATE:GetCurrentSong():GetDisplayFullTitle();
+            local artist = GAMESTATE:GetCurrentSong():GetDisplayArtist();
+
+            self:settext( group..'\n'..title..' by '..artist );
+
+        end
+
+
+        self:sleep( 1 / 60 );
+        self:queuecommand( 'Update' );
+
+    end"
+/>
+<!-- YOSEFU lines END -->
+<!-- Samario Overlay Stuff (judgment tracker in gameplay) START -->
+	<!-- NOT TIED TO SPECIFIC PLAYER -->
+	
+	<Layer File="modules/PN_CourseSongDisplay.xml" />
+
+	<!-- PLAYER 1 -->
+	
+	<ActorFrame
+		InitCommand="%function(self)
+			self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y/8 + 10)
+			self:zoom(1)
+			
+		end"
+	><children>
+	
+		<!-- max combo text -->
+		<Layer File="modules/P1_MaxComboDisplay.xml" />
+		
+		<!-- point displays -->
+		<Layer File="modules/P1_DPDisplay.xml" />
+	
+		<!-- judgement numbers -->
+		<Layer File="modules/P1_JudgeDisplay.xml" />
+		
+		<!-- nITG only: combo-based scoring -->
+		<!-- <Layer File="P1_ComboScoringManager.xml" /> -->
+		
+		
+	</children></ActorFrame>
+	
+	
+	<!-- PLAYER 2 -->
+	<ActorFrame
+		InitCommand="%function(self)
+			self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y/8 + 10)
+			self:zoom(1)
+		end"
+	><children>
+	
+		<!-- max combo text -->
+		<Layer File="modules/P2_MaxComboDisplay.xml" />
+	
+		<!-- dance points display -->
+		<Layer File="modules/P2_DPDisplay.xml" />
+	
+		<!-- judgement display -->
+		<Layer File="modules/P2_JudgeDisplay.xml" />
+		
+	</children></ActorFrame>
+<!-- Samario Overlay Stuff (judgment tracker in gameplay) END -->
 </children> </ActorFrame>
 

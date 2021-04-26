@@ -1,8 +1,9 @@
 <ActorFrame> <children>
-	<Layer File="ScreenWithMenuElements header"/>	
+	<Layer File="ScreenWithMenuElements header"/>
+		<!-- Text="choose a song lmao"	 -->
 	<Layer
 		Type="BitmapText"
-		Text="SELECT MUSIC"
+		Text="choose a song lmao"
 		File="_wendy white"
 		InitCommand="diffuse,#FFFFFF;zoom,.4;shadowlength,0;horizalign,left;x,15;y,16"
 	/>

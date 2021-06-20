@@ -131,6 +131,7 @@ local melody = CONSTMELODY
         ['V3.1']   = 20180909,
         ['V4']     = 20200112,
         ['V4.0.1'] = 20200126,
+        ['V4.2'] = 20210420,
     }
     melody.GetBuildVersion = function()
         if not FUCK_EXE then return nil end

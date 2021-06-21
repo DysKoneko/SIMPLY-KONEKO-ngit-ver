@@ -128,32 +128,22 @@ local melody = CONSTMELODY
         ['V1']     = 20161226,
         ['V2']     = 20170405,
         ['V3']     = 20180617,
-        ['V3.1']   = 20180827,
+        ['V3.1']   = 20180909,
         ['V4']     = 20200112,
         ['V4.0.1'] = 20200126,
-        ['V4.1']   = 20200402, -- All versions are welcome, except do_not
-		['4.2']    = 20210420, -- nice
     }
     melody.GetBuildVersion = function()
         if not FUCK_EXE then return nil end
-
-        local version_string = 'V1'
-        local version_date = melody.BuildVersions[ version_string ]
-
-		for k,v in pairs(melody.BuildVersions) do
-            if tonumber(GAMESTATE:GetVersionDate()) >= v  then
-                
-                version_string = k
-                version_date = v
-
+        local versions = {'V1','V2','V3','V3.1','V4','V4.0.1'}
+        for i,v in pairs(versions) do
+            if melody.BuildVersions[v] >= tonumber(GAMESTATE:GetVersionDate()) then
+                return v, melody.BuildVersions[v]
             end
         end
-
-        return version_string, version_date
     end
     melody.MinimumVersion = function(build) -- OpenITG|V1|V2|V3|V3.1|V4
         if build ~= 'OpenITG' and not FUCK_EXE then return false end
-        if build == 'OpenITG' then return true end -- Only one check for OpenITG
+        if build == 'OpenITG' and not FUCK_EXE then return true end -- Only one check for OpenITG
 
         local v_str,v_num = melody.GetBuildVersion()
 
@@ -176,10 +166,6 @@ local melody = CONSTMELODY
                 Options_ScreenStageOptions=false,
                 Options_EvaluationMusic=true,
                 Options_SelectMusicPony=true,
-                Options_ProgressBar=false,
-
-                -- Private
-                BorderlessWindowed=false,
             }
         end
         return melody.Profile.Profile(0).Melody
@@ -268,11 +254,7 @@ local melody = CONSTMELODY
         elseif x < -6*n then
             x = x+12*n
         end
-
-        -- this was bothering me for quite awhile
-        local screen_mult = ( ( ( SCREEN_WIDTH/640 ) - 1 ) * 1.2 ) + 1
-
-        local s = scale(math.abs(x*(2/screen_mult)),0,4*n,3,-1)
+        local s = scale(math.abs(x),0,4*n,3,-1)
         local z = clamp(s,1,3)
         z = scale(z,1,3,1,1.5)
         s = clamp(s,0,maxClamp) 
@@ -285,7 +267,7 @@ local melody = CONSTMELODY
 
         if math.abs(offset) <= 1 then
             local t = 1 - math.abs(offset) -- [0-1]
-            self:zoom(0.5 + (1-0.5) * t)
+            self:zoom(0.5 + (1.15-0.5) * t)
         end
         if melody.Pony.TextFrame and math.abs(offset)<0.5 then
             local newIndex = Moduloop(itemIndex+1,1,12)
@@ -473,14 +455,12 @@ local melody = CONSTMELODY
 
 -- Message Frame
 
-    melody.ScreenSystemLayer = nil
-
     melody.MessageFrame = {}
     melody.MessageFrame.Frame = nil
     melody.MessageFrame.MessageOnCommand = function(self)
-        --if not CONSTMELODY.MessageFrame.Frame then
-        --    CONSTMELODY.MessageFrame.Frame=self;
-        --end
+        if not CONSTMELODY.MessageFrame.Frame then
+            CONSTMELODY.MessageFrame.Frame=self;
+        end
         if melody.MinimumVersion('V3') then
             --self:cmd('finishtweening;x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-10;zoom,0.7;diffusealpha,0;bob;effectmagnitude,0,4,0;effectperiod,2;sleep,0.5;decelerate,0.5;diffusealpha,1')
             --self:cmd('sleep,1;decelerate,0.5;diffusealpha,0')
@@ -550,21 +530,17 @@ local melody = CONSTMELODY
             end
             return t
         end,
-        FailOption_Choices = {'Off','Random'},
+        FailOption_Choices = {'Off'},
         FailOption = function()
             local t = OptionRowBase('FailOption')
             t.OneChoiceForAllPlayers = true
             t.Choices = melody.ExtraOptions.FailOption_Choices
             t.LoadSelections = function(self, list)
-                if not CONSTMELODY.MinimumVersion('V3.1') or not FUCK_EXE then
-                    list[1] = true
-                else
-                    if not melody.Profile.Get().Options_FailOption then list[1]=true; return end
-                    for i=1, table.getn(self.Choices) do
-                        if melody.Profile.Get().Options_FailOption == i then
-                            list[i] = true
-                            return
-                        end
+                if not melody.Profile.Get().Options_FailOption then list[1]=true; return end
+                for i=1, table.getn(self.Choices) do
+                    if melody.Profile.Get().Options_FailOption == i then
+                        list[i] = true
+                        return
                     end
                 end
             end
@@ -616,16 +592,6 @@ local melody = CONSTMELODY
             end
             return t
         end,
-        ProgressBar = function()
-            local t = OptionRowBase('ProgressBar')
-            t.OneChoiceForAllPlayers = true
-            t.Choices = { "Enable", "Disable" }
-            t.LoadSelections = function(self, list) if melody.Profile.Get().Options_ProgressBar then list[1] = true else list[2] = true end end
-            t.SaveSelections = function(self, list)
-                melody.Profile.Get().Options_ProgressBar = list[1];
-            end
-            return t
-        end
     }
 -- Break Time
     melody.BreakTime = {}
@@ -666,43 +632,11 @@ local melody = CONSTMELODY
             External:add_buffer(1,{1,6})
         end
     end
--- Card Display
-    melody.Card = {}
-    melody.Card[1] = {}
-    melody.Card[1].Icon = nil
-    melody.Card[1].Text = nil
-    melody.Card[1].Position = { SCREEN_CENTER_X-(SCREEN_WIDTH*160/640) , SCREEN_BOTTOM - 13 }
-    melody.Card[2] = {}
-    melody.Card[2].Icon = nil
-    melody.Card[2].Text = nil
-    melody.Card[2].Position = { SCREEN_CENTER_X+(SCREEN_WIDTH*160/640) , SCREEN_BOTTOM - 13 }
-    -- it was too long
-    melody.Card.Initialize_Text = function(self,pn)
-        -- shadowlength,0;horizalign,left;vertalign,bottom;zoom,0.4;ztest,1
-        self:shadowlength(0)
-        self:horizalign(pn==1 and 'left' or 'right')
-        self:vertalign('bottom')
-        self:zoom(0.4)
-        self:ztest(1)
-
-        -- Might consider removing card display at all??????
-
-        -- useless, any screensystemlayer actors can't be grabbed.
-        -- melody.Card[pn].Text = self
-    end
-    melody.Card.Initialize_Icon = function(self,pn)
-        -- DrawOrder,311;zoom,0.8
-        self:draworder(311)
-        self:zoom(0.8)
-
-        melody.Card[pn].Icon = self
-    end
 -- MISC
     melody.ScreenSelectPlayModeNITG = {}
     melody.ScreenSelectPlayModeNITG.Choice = 1
     melody.ScreenTitleMenu = {}
     melody.ScreenTitleMenu.Choice = 1
     melody.Chegg = false
-    melody.IsEditPlaying = false
     melody.Garbage = {} -- Incase I got too lazy
 -- 

@@ -1,6 +1,19 @@
 <ActorFrame 
     OnCommand="effectperiod,0/1;luaeffect,Update"
-    UpdateCommand="%function(self) stitch('lua.event').Update(self) end"
+    UpdateCommand="%function(self) stitch('lua.event').Update(self) 
+        if not jzmn_screen_initialized then
+            jzmn_lastSeenScreen = ''
+            jzmn_screen_initialized=true
+            self:playcommand('DelayOn')
+        else
+            local currScreenName = SCREENMAN:GetTopScreen():GetName()
+        if jzmn_lastSeenScreen ~= currScreenName then
+            local event = stitch 'lua.event'
+            event.Call('screen change',jzmn_lastSeenScreen,currScreenName)
+            jzmn_lastSeenScreen = currScreenName
+            end
+        end
+    end"
     OverlayReadyMessageCommand="%function(self) stitch.RequireEnv('lua.setup', {self = self}) end" >
     <children>
         <!-- Feel free to add more overlays here -->
@@ -8,6 +21,8 @@
 		<Layer File="Death" />
         <Layer File="Console"/>
         <Layer File="ViewGC" />
+		<Layer File="pause" />
+		<Layer File="Scripts" />
     </children>
 	
 </ActorFrame>

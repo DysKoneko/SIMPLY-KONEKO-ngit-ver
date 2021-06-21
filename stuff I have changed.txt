@@ -1,0 +1,103 @@
+does not include judgment images
+
+BGAnimations
+	_shared background images
+		loveheart (doubleres).png
+	ScreenEvaluation overlay.xml
+		added these lines at the bottom:
+			<Layer File="ScreenEvaluation widget pb" />
+			<Layer File="ScreenEvaluation widget uksrtScore" />
+	ScreenEvaluation widget offset.xml
+	ScreenEvaluation widget pb.xml
+	ScreenGameplay overlay
+		default.xml
+		modules
+	OffsetPlot.xml
+
+Fonts
+	_misobold outline 16x16 (doubleres).png
+	_misobold small 16x16 (doubleres).png
+	_misobold white 16x16 (doubleres).png
+	_misoreg small 16x16 (doubleres).png
+	_misoreg white 16x16 (doubleres).png
+	_ScreenEvaluation numbers 5x3 (doubleres).png
+
+Graphics
+	Screen Evaluation grade frame p1
+		default.xml
+	Screen Evaluation grade frame p2
+		default.xml
+	ScreenEvaluationStage JustBarely
+		arrow (res 16x14).png
+		default.xml
+	ScreenEvaluationStage header.xml
+	Common fallback background.png
+	Judgment BeginnerLabel 2x6.png
+	Judgment label 2x6.png
+	ScreenSelectColor header.xml
+	ScreenSelectColor scroll choice01.png
+	ScreenSelectColor scroll choice02.png
+	...
+	ScreenSelectColor scroll choice12.png
+	ScreenTitleMenu scroll choice1.xml
+	ScreenTitleMenu scroll choicediscord.xml
+	ScreenTitleMenu scroll choiceexit.xml
+	ScreenTitleMenu underlay
+		SimplyLove doubleres.png
+	
+Lua
+	added External.lua
+	added Melody.lua
+	
+Numbers
+	_wendy score 1x15 (res 80x1200).png
+	
+Screens/Overlay
+	added Scripts.xml from Constant Melody X
+	added pause.xml from Constant Melody X
+	default.xml
+
+Scripts
+	Mods.lua
+		Line 786	 844 (4.2.0)
+		Line 820	 879 (4.2.0)
+		Line 962	1024 (4.2.0)
+	Theme.lua
+		changed 'Voice' to 'BlindPlus' in playerOptions[1]
+	added external.lua from Constant Melody X
+	added melody.lua from Constant Melody X
+	
+Sounds
+	_common menu music (loop).ogg
+	_common menu music (loop).sm
+	Player mine.ogg
+
+	ScreenEvaluation music.redir
+		changed _silent to resultscreen (loop)
+	Added Resultscreen.ogg
+	added ScreenSelectColor (loop).ogg
+	ScreenSelectStyle2 music.redir
+		changed _common menu music (loop) to ScreenSelectColor (loop)
+	ScreenSelectPlayMode music.redir
+		changed _common menu music (loop) to ScreenSelectColor (loop)
+	ScreenSelectMusic section music.redir
+		changed _silent to _common menu music
+
+metrics.ini
+	ScreenOptionsMenu
+		Line19=list,Reload Songs/Courses
+	ScreenTitileMenu
+		Choicefuck=stopmusic;screen,Screenfuck
+
+	[Screenfuck]
+	Class=ScreenExitCommand
+	# Windows only for now
+	ExecPath="explorer"
+	ExecParams="C:\Games\NotITG\Program\NotITG-V4.0.1.exe"	
+
+~Kenneth Note
+	to mess with colors found in Dance, Edit mode, Options, Restart, and Exit, edit file "ScreenTitleMenu scroll choice'name of choice'"
+	(Graphics)
+
+	To add music to select music screen, edit "ScreenSelectMusic section music.redir" file, and change "_silent" to "'any ogg name' (loop)"
+		"'any ogg name' (loop).ogg" must exist in the songs folder

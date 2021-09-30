@@ -1,4 +1,15 @@
 <ActorFrame> <children>
+	<ActorFrame><children>
+		<Layer File="_black" Name="fire" Frag="../_shaderFire.frag"
+			InitCommand="%function(self)
+				fire = self
+				self:stretchto(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
+				self:hidden(0)
+				self:diffusealpha(1)
+				ps = fire:GetShader()
+			end"
+		/>
+	</children></ActorFrame>
 	<ActorFrame Command="queuecommand,Icon" IconCommand="%function() StyleIcon() end" />
 	<ActorFrame Command="%function() if GAMESTATE:GetCoinMode() == 1 and not GetPref('EventMode') then rateMods = rateModsPay else rateMods = rateModsFree end end" />
 	<Layer 
